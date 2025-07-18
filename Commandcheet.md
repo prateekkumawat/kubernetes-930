@@ -7,3 +7,12 @@
 *  kubectl create namespace namespace_name
 *  kubectl delete namespace namespace_name 
 
+# pod commands 
+* kubectl create podname --image=imagename --port=containerport  \\ create pod 
+* kubectl exec -it podname -- command    \\ access pod 
+* kubectl expose podname   \\ expose pod in clusterip 
+* kubectl run pod1 --image=nginx --port=80 --dry-run=client -o yaml // print yaml version
+* kubectl run pod1 --image=nginx --port=80 --dry-run=client -o json // print json format
+
+# Service commands
+* kubectl get svc -A     \\ check your svc 
