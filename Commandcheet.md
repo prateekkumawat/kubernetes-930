@@ -14,5 +14,9 @@
 * kubectl run pod1 --image=nginx --port=80 --dry-run=client -o yaml // print yaml version
 * kubectl run pod1 --image=nginx --port=80 --dry-run=client -o json // print json format
 
+# decleartive management 
+* kubectl delete  -f testpod.yaml    // Delete deployment using yaml 
+* kubectl apply  -f testpod.yaml     // apply deployment 
+
 # Service commands
 * kubectl get svc -A     \\ check your svc 

@@ -1,7 +1,16 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: learning
+  labels: 
+    type: testytpe
+    app: basicauth
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: testpod
+  namespace: learning
   labels:
     type: testytpe
     app: basicauth
@@ -18,3 +27,22 @@ spec:
         cpu: "900m"
     ports:
       - containerPort: 80
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: testpod-svc
+  namespace: learning
+  labels: 
+    type: testytpe
+    app: basicauth
+spec:
+  selector:
+    app: basicauth
+    type: testytpe
+  type: ClusterIP
+  ports:
+  - name: nginx-port
+    port: 82
+    targetPort: 80
