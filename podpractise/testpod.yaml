@@ -1,3 +1,4 @@
+# kustomize method yaml // helm method 
 apiVersion: v1
 kind: Namespace
 metadata:
