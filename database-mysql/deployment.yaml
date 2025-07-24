@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-app
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: mysql-app
+  template:
+    metadata:
+      labels:
+        app: mysql-app
+    spec:
+      containers:
+      - name: mysql-app
+        image: mysql
+        resources:
+          requests: 
+            memory: "500Mi"
+            cpu: "700m"
+          limits:
+            memory: "1200Mi"
+            cpu: 1
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: redhat 
