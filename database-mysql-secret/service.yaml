@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql-app-svc
+  namespace: mysql
+spec:
+  selector:
+    app: mysql-app
+  type: LoadBalancer
+  ports:
+  - name: svc-port-mysql
+    port:  80
+    targetPort: 3306
