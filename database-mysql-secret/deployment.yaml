@@ -31,3 +31,13 @@ spec:
             secretKeyRef:
               name: mysql-admin-auth
               key: password
+        - name: MYSQL_USER
+          valueFrom: 
+            secretKeyRef:
+              key: username
+              name: mysql-local-auth
+        - name: MYSQL_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              key: password
+              name: mysql-local-auth
