@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-app
+  namespace: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-app
+  template:
+    metadata:
+      labels:
+        app: mysql-app
+    spec:
+      volumes:
+      - name: data-collection-path
+        persistentVolumeClaim: 
+          claimName: mysql-app-data-vol
+      containers:
+      - name: mysql-app
+        image: mysql
+        resources:
+          requests: 
+            memory: "500Mi"
+            cpu: "700m"
+          limits:
+            memory: "1200Mi"
+            cpu: 1
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: data-collection-path
+          mountPath: /var/lib/mysql/
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: mysql-admin-auth
+              key: password
+        - name: MYSQL_USER
+          valueFrom: 
+            secretKeyRef:
+              key: username
+              name: mysql-local-auth
+        - name: MYSQL_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              key: password
+              name: mysql-local-auth
