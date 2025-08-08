@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mysql
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-app-pvc
+  namespace: mysql
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  volumeMode: Filesystem
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-app
+  namespace: mysql
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: mysql-app
+  template:
+    metadata:
+      labels:
+        app: mysql-app
+    spec:
+      containers:
+      - name: mysql-app
+        image: mysql
+        resources:
+          requests: 
+            memory: "500Mi"
+            cpu: "700m"
+          limits:
+            memory: "1200Mi"
+            cpu: 1
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: redhat 
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql 
+      volumes:
+      - name: mysql-data
+        persistentVolumeClaim: 
+          claimName: mysql-app-pvc
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql-app-svc
+  namespace: mysql
+spec:
+  selector:
+    app: mysql-app
+  type: LoadBalancer
+  ports:
+  - name: svc-port-mysql
+    port:  80
+    targetPort: 3306
