@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: mysql-server-svc
-  namespace: wordpress
+  namespace: wordpress1
   labels:
     application: wp-app
     component: mysql

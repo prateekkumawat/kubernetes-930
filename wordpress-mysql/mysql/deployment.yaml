@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress-mysql
-  namespace: wordpress
+  namespace: wordpress1
   labels:
     component: mysql
     app: database

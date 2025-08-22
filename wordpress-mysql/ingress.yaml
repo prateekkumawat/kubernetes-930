@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-wordpress
-  namespace: wordpress
+  namespace: wordpress1
   labels:
     app: wordpress
     component: wordpress

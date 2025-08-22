@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: wordpress
+  name: wordpress1
   labels:
     application: wp-app
     component: mysql
