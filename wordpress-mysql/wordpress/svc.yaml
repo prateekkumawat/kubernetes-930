@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: wordpress-svc
+  namespace: wordpress
+  labels:
+    application: wp-app
+    component: wordpress
+    app: wordpress
+spec:
+  selector:
+    application: wp-app
+    component: wordpress
+    app: wordpress
+  type: ClusterIP 
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80

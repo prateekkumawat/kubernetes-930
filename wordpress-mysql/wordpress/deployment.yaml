@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  namespace: wordpress
+  labels:
+    app: wordpress
+    component: wordpress
+    application: wp-app
+spec:
+  selector:
+    matchLabels:
+     app: wordpress
+     component: wordpress
+     application: wp-app
+  template:
+    metadata:
+      labels:
+       app: wordpress
+       component: wordpress
+       application: wp-app
+    spec:
+      volumes:
+      - name: data-vol
+        persistentVolumeClaim:
+          claimName: wordpress-data-0
+      containers:
+      - name: wordpress
+        image: wordpress:latest
+        resources:
+          requests:
+            memory: "400Mi"
+            cpu: "500m"
+          limits: 
+             memory: "700Mi"
+             cpu: "700m"  
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: data-vol
+          mountPath: /var/www/html
+        env: 
+        - name: WORDPRESS_DB_HOST
+          value: mysql-server-svc.wordpress.svc.cluster.local
+        - name: WORDPRESS_DB_USER
+          valueFrom: 
+            secretKeyRef: 
+              name: wp-secret
+              key: username
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wp-secret
+              key: password
+        - name: MYSQL_DATABASE
+          value: wpdata     

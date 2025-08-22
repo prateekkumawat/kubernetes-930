@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-mysql
+  namespace: wordpress
+  labels:
+    component: mysql
+    app: database
+    application: wp-app
+spec:
+  selector:
+    matchLabels:
+      component: mysql
+      app: database
+      application: wp-app
+  template:
+    metadata:
+      labels:
+       component: mysql
+       app: database
+       application: wp-app
+    spec:
+      containers:
+      - name: wordpress-mysql
+        image: mysql:latest
+        volumeMounts:
+        - name: data-path
+          mountPath: /var/lib/mysql/
+        resources:
+          requests: 
+            memory: "800Mi"
+            cpu: "800m"
+          limits:
+            memory: "1400Mi"
+            cpu: 1
+        ports:
+        - containerPort: 3306
+        env: 
+         - name: MYSQL_ROOT_PASSWORD
+           valueFrom:
+             secretKeyRef:
+               name: mysql-admin-auth
+               key: password
+         - name: MYSQL_USER
+           valueFrom: 
+             secretKeyRef: 
+               name: mysql-secret
+               key: username
+         - name: MYSQL_PASSWORD
+           valueFrom:
+             secretKeyRef:
+               name: mysql-secret
+               key: password
+         - name: MYSQL_DATABASE
+           value: wpdata      
+      volumes:
+      - name: data-path
+        persistentVolumeClaim:
+           claimName: mysql-server-data-0
