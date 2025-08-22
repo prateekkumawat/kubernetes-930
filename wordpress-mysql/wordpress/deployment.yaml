@@ -20,10 +20,10 @@ spec:
        component: wordpress
        application: wp-app
     spec:
-      volumes:
-      - name: data-vol
-        persistentVolumeClaim:
-          claimName: wordpress-data-0
+      # volumes:
+      # - name: data-vol
+      #   persistentVolumeClaim:
+      #     claimName: wordpress-data-0
       containers:
       - name: wordpress
         image: wordpress:latest
@@ -36,9 +36,9 @@ spec:
              cpu: "700m"  
         ports:
         - containerPort: 80
-        volumeMounts:
-        - name: data-vol
-          mountPath: /var/www/html
+        # volumeMounts:
+        # - name: data-vol
+        #   mountPath: /var/www/html
         env: 
         - name: WORDPRESS_DB_HOST
           value: mysql-server-svc.wordpress.svc.cluster.local
