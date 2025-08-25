@@ -41,4 +41,4 @@ reclaimPolicy: Delete                           /// reclaim // retain // delete
 volumeBindingMode: Immediate                    /// waitforfirstconsumer
 allowVolumeExpansion: true                      /// 
 mountOptions:
-  - nfsvers=4.1
+  - nfsvers=4.1git 

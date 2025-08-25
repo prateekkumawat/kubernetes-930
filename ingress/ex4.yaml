@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web4-ingress
+  namespace: web4
+  labels:
+    app: web4
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /  
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: api.mgmt.ocelottraining.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /web4
+        backend:
+          service:
+            name: web4
+            port: 
+              number: 80
+  - host: web4.mgmt.ocelottraining.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: web4
+            port: 
+              number: 80            
